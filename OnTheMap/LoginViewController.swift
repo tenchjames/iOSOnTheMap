@@ -10,19 +10,26 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController {
-    @IBOutlet weak var locationIconLabel: UILabel!
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var facebookIconLabel: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var loginWithFacebookButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var errorIconLabel: UILabel! // graphical representation of error
+    
+    let emailTextFieldDelegate = EmailTextFieldDelegate()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        emailTextField.delegate = emailTextFieldDelegate
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        configureView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,11 +37,10 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
     func configureView() {
-        locationIconLabel.font = UIFont(name: "icomoon", size: 64.0)
-        locationIconLabel.textColor = UIColor.whiteColor()
-        locationIconLabel.text = Icomoon.Location.rawValue
+        errorIconLabel.font = UIFont(name: "icomoon", size: 20.0)
+        errorIconLabel.textColor = UIColor.redColor()
+        errorIconLabel.text = ""
         
         facebookIconLabel.font = UIFont(name: "icomoon", size: 18.0)
         facebookIconLabel.textColor = UIColor.whiteColor()
@@ -65,6 +71,24 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func setErrorFields(error: String) {
+        if error.rangeOfString("Account") != nil {
+            self.errorIconLabel.text = Icomoon.Lock.rawValue
+            self.errorLabel.text = "Incorrect login credentials - try again"
+        } else if error.rangeOfString("Internet") != nil {
+            self.errorIconLabel.text = Icomoon.Connection.rawValue
+            self.errorLabel.text = "Please connect to the Internet"
+        } else {
+            self.errorIconLabel.text = Icomoon.Cross.rawValue
+            self.errorLabel.text = "Unable to connect at thsi time"
+        }
+    }
+    
+    @IBAction func signUpTouchUp() {
+        let app = UIApplication.sharedApplication()
+        let udacityLoginURL = "https://www.udacity.com/account/auth#!/signup"
+        app.openURL(NSURL(string: udacityLoginURL)!)
+    }
 
     @IBAction func udacityLogin(sender: AnyObject) {
         if emailTextField.text.isEmpty {
@@ -82,14 +106,17 @@ class LoginViewController: UIViewController {
                 ]
             ]
             
-            UdacityClient.sharedInstance().authenticateWithViewController(credentials) { success, errorString in
+            UdacityClient.sharedInstance().authenticateWithCredentials(credentials) { success, errorString in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.completeLogin()
                     }
-                    
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
+                        // for graphical representation of error
+                        if let error = errorString {
+                            self.setErrorFields(error)
+                        }
                         ApiHelper.displayErrorAlert(self, title: "Login Error", message: errorString!)
                     }
                 }
@@ -109,14 +136,18 @@ class LoginViewController: UIViewController {
                 UdacityClient.JSONBodyKeys.Access : currentToken.tokenString
                 ]
             ]
-            UdacityClient.sharedInstance().authenticateWithViewController(credentials) { success, errorString in
+            UdacityClient.sharedInstance().authenticateWithCredentials(credentials) { success, errorString in
                 if success {
+                    UdacityClient.sharedInstance().facebookLogin = true
                     dispatch_async(dispatch_get_main_queue()) {
                         self.completeLogin()
                     }
-                    
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
+                        // for graphical representation of error
+                        if let error = errorString {
+                            self.setErrorFields(error)
+                        }
                         ApiHelper.displayErrorAlert(self, title: "Login Error", message: errorString!)
                     }
                 }
@@ -137,14 +168,19 @@ class LoginViewController: UIViewController {
                         ]
                     ]
                     
-                    UdacityClient.sharedInstance().authenticateWithViewController(credentials) { success, errorString in
+                    UdacityClient.sharedInstance().authenticateWithCredentials(credentials) { success, errorString in
                         if success {
+                            UdacityClient.sharedInstance().facebookLogin = true
                             dispatch_async(dispatch_get_main_queue()) {
                                 self.completeLogin()
                             }
                             
                         } else {
                             dispatch_async(dispatch_get_main_queue()) {
+                                // for graphical representation of error
+                                if let error = errorString {
+                                    self.setErrorFields(error)
+                                }
                                 ApiHelper.displayErrorAlert(self, title: "Login Error", message: errorString!)
                             }
                         }

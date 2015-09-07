@@ -10,11 +10,7 @@ import Foundation
 import UIKit
 
 extension UdacityClient {
-    
-    
-    func authenticateWithViewController(credentials: [String: AnyObject], completionHandler: (success: Bool, errorString: String?) -> Void) {
-        
-        // log in with udacity...maybe switch her for facebook login
+    func authenticateWithCredentials(credentials: [String: AnyObject], completionHandler: (success: Bool, errorString: String?) -> Void) {
         self.getSessionId(credentials) { success, udacityLogin, errorString in
             if success {
                 self.sessionId = udacityLogin!.sessionId
@@ -28,7 +24,7 @@ extension UdacityClient {
                             completionHandler(success: true, errorString: nil)
                         } else {
                             // if some reason the object is nil we have an error
-                            completionHandler(success: false, errorString: "Error getting User info")
+                            completionHandler(success: false, errorString: errorString)
                         }
                     } else {
                         completionHandler(success: false, errorString: errorString)
@@ -85,5 +81,34 @@ extension UdacityClient {
             }
         }
     }
+    
+    // MARK: Delete
+    func deleteUdacitySession(completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
+        let method = UdacityClient.Methods.Session
+        let urlString = UdacityClient.Constants.BaseSecureURL + method
+        let url = NSURL(string: urlString)!
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "DELETE"
+        var xsrfCookie: NSHTTPCookie? = nil
+        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+        for cookie in sharedCookieStorage.cookies as! [NSHTTPCookie] {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value!, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil { // Handle error…
+                return
+            }
+            let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+            ApiHelper.parseJSONWithCompletionHandler(newData, completionHandler: completionHandler)
+        }
+        task.resume()
+        
+        return task
+    }
 }

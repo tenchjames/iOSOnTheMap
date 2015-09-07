@@ -79,4 +79,19 @@ class ApiHelper {
             return nil
         }
     }
+    
+    /* Helper to check for valid url...not perfect but gets general form */
+    class func isValidURL(testURL: String) -> Bool {
+        let regex = NSRegularExpression(pattern: "^http(s)?://[a-zA-Z0-9]+", options: .allZeros, error: nil)
+        let range = NSMakeRange(0, count(testURL))
+        return regex?.firstMatchInString(testURL, options: .allZeros, range: range) != nil
+    }
+    
+    /* email helper - found on stack overflow */
+    class func isValidEmail(email: String) -> Bool {
+        let regex = NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .CaseInsensitive, error: nil)
+        return regex?.firstMatchInString(email, options: nil, range: NSMakeRange(0, count(email))) != nil
+    }
+    
+    
 }

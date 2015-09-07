@@ -33,10 +33,5 @@ struct UdacityLogin {
                 sessionExpiration = expires
             }
         }
-    }
-    
-    
-    
-    
-    
+    }    
 }

@@ -16,11 +16,9 @@ class UdacityClient : NSObject {
     
     var sessionId: String?  = nil
     var UserId: String? = nil
+    var facebookLogin : Bool = false
     
     var udacityStudent: UdacityStudent? = nil
-    var UserLastName: String? = nil
-    var UserFirstName: String? = nil
-    var UserEmail: String? = nil
     
     override init() {
         session = NSURLSession.sharedSession()
@@ -95,17 +93,13 @@ class UdacityClient : NSObject {
         task.resume()
         return task
     }
+    
 
 
-    
-    
     class func sharedInstance() -> UdacityClient {
-        
         struct Singleton {
             static var sharedInstance = UdacityClient()
         }
         return Singleton.sharedInstance
     }
-    
-    
 }

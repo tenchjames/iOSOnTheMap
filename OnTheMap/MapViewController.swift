@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
@@ -16,11 +18,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // we expect this to be attached when the view controller is launched
     var udacityStudent : UdacityStudent!
+    
+    // will fill the array from the StudentInformation that is stored in external object
+    var recentStudents: RecentStudents!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         udacityStudent = UdacityClient.sharedInstance().udacityStudent!
-        // Do any additional setup after loading the view.
+        recentStudents = RecentStudents.sharedInstance()
         self.mapView.delegate = self
         
         // navigation buttons
@@ -41,13 +46,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // set properties for progress wheel
         activityIndicator.hidesWhenStopped = true
         activityIndicator.tintColor = UIColor.whiteColor()
-
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        reloadStudentLocations()
+        
+        // check if the array of Students has been filled, if so use that to build
+        // the map pins
+        let studentsArray = recentStudents.getRecentStudents()
+        
+        if studentsArray.count == 0 {
+            reloadStudentLocations()
+        } else {
+            // clear any current pins
+            self.mapView.removeAnnotations(annotations)
+            addAnnotationsFromStudentArray(studentsArray)
+            // put new pins back on the map
+            mapView.addAnnotations(self.annotations)
+        }
+        
+        
     }
     
     func pinNewLocationTouchUp() {
@@ -56,7 +74,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func logoutButtonTouchUp() {
+        let udacity = UdacityClient.sharedInstance()
+        let facebookStatus = udacity.facebookLogin
         
+        if facebookStatus {
+            var logout: FBSDKLoginManager = FBSDKLoginManager()
+            logout.logOut()
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            UdacityClient.sharedInstance().deleteUdacitySession() { result, error in
+                if let error = error {
+                    // how to handle error on delete??? hmm
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     func showBusy() {
@@ -72,8 +107,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func reloadStudentLocations() {
         showBusy()
         let parseClient = ParseClient.sharedInstance()
-        var mostRecentStudentLocations: [StudentInformation] = [StudentInformation]()
-        parseClient.getMostRecentStudentLocations() { results, error in
+        let parameters = [
+            ParseClient.ParameterKeys.Limit: 100
+        ]
+        parseClient.getMostRecentStudentLocations(parameters) { results, error in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showNotBusy()
@@ -81,23 +118,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             } else {
                 if let results = results {
+                    // keep shared object up to date
+                    self.recentStudents.loadFromStudentArray(results)
                     // clear prior annotations with the current array values
                     self.mapView.removeAnnotations(self.annotations)
-                    self.annotations = [MKPointAnnotation]()
-                    for result in results {
-                        let lat = CLLocationDegrees(result.latitude as Double)
-                        let lon = CLLocationDegrees(result.longitude as Double)
-                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        let first = result.firstName
-                        let last = result.lastName
-                        let mediaURL = result.mediaUrl
-                        
-                        var annotation = MKPointAnnotation()
-                        annotation.coordinate = coordinate
-                        annotation.title = "\(first) \(last)"
-                        annotation.subtitle = mediaURL
-                        self.annotations.append(annotation)
-                    }
+                    self.addAnnotationsFromStudentArray(results)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.mapView.addAnnotations(self.annotations)
                         self.showNotBusy()
@@ -105,7 +130,23 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
-        
+    }
+    
+    func addAnnotationsFromStudentArray(students: [StudentInformation]) {
+        for student in students {
+            let lat = CLLocationDegrees(student.latitude as Double)
+            let lon = CLLocationDegrees(student.longitude as Double)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            let first = student.firstName
+            let last = student.lastName
+            let mediaURL = student.mediaUrl
+            
+            var annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = "\(first) \(last)"
+            annotation.subtitle = mediaURL
+            self.annotations.append(annotation)
+        }
     }
     
     
@@ -132,40 +173,4 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             app.openURL(NSURL(string: view.annotation.subtitle!)!)
         }
     }
-    
-    
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

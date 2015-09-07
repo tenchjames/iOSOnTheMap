@@ -12,7 +12,7 @@ class ParseClient: NSObject {
     
     // shared session
     var session: NSURLSession
-    
+
     override init() {
         session = NSURLSession.sharedSession()
         super.init()
@@ -26,7 +26,7 @@ class ParseClient: NSObject {
         var mutableparameters = parameters
         
         // 2. build the url
-        let urlString = Constants.BaseSecureURL + method + ApiHelper.escapedParameters(parameters)
+        let urlString = Constants.BaseSecureURL + method + ApiHelper.escapedParameters(mutableparameters)
         let url = NSURL(string: urlString)!
         
         // 3. configure request
@@ -54,13 +54,13 @@ class ParseClient: NSObject {
     }
     
     // MARK: - POST
-    func taskForPostMethod(method: String, parameters: [String : AnyObject], jsonBody: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPostMethod(method: String, jsonBody: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         // 1. set the parameters
-        var mutableParameters = parameters
+        // none needed for Parse post
         
         // 2. build the url
-        let urlString = Constants.BaseSecureURL + method + ApiHelper.escapedParameters(parameters)
+        let urlString = Constants.BaseSecureURL + method
         let url = NSURL(string: urlString)!
         
         // 3. configure the request

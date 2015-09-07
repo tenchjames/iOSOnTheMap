@@ -13,14 +13,30 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var previewURLButton: UIButton!
     @IBOutlet weak var locationSearchTextField: UITextField!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var topViewWhereLabel: UILabel!
+    @IBOutlet weak var topViewStudyLabel: UILabel!
+    @IBOutlet weak var topViewTodayLabel: UILabel!
+    @IBOutlet weak var urlTextField: UITextField!
+    
+    var udacityStudent: UdacityStudent!
+    var parseClient: ParseClient!
+    var newLatitude: CLLocationDegrees?
+    var newLongitude: CLLocationDegrees?
+    let urlTextFieldDelegate = URLTextFieldDelegate()
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        udacityStudent = UdacityClient.sharedInstance().udacityStudent
+        parseClient = ParseClient.sharedInstance()
         // Do any additional setup after loading the view.
+        self.mapView.delegate = self
+        self.urlTextField.delegate = urlTextFieldDelegate
+        showFindView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -28,50 +44,193 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         configureView()
     }
     
-    
     func configureView() {
-        mapView.hidden = true
+        submitButton.layer.cornerRadius = 4.0
+        findButton.layer.cornerRadius = 4.0
+    }
+    
+    func showFindView() {
+        bottomView.backgroundColor = UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1.0)
+        topView.backgroundColor = UIColor(red: 0.886, green: 0.886, blue: 0.886, alpha: 1.0)
+        
+        locationSearchTextField.enabled = true
+        locationSearchTextField.hidden = false
+        
+        findButton.enabled = true
+        findButton.hidden = false
+        
         submitButton.hidden = true
         submitButton.enabled = false
         
+        topViewWhereLabel.hidden = false
+        topViewTodayLabel.hidden = false
+        topViewStudyLabel.hidden = false
+        
+        urlTextField.hidden = true
+        urlTextField.enabled = false
+        
+        previewURLButton.hidden = true
+        previewURLButton.enabled = false
+        
+        mapView.hidden = true
     }
     
     func hideFindView() {
+        // TODO: figure how to make bottom view opaque so more of the map shows??
+        bottomView.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
+        topView.backgroundColor = UIColor(red: 0.553, green: 0.718, blue: 1.0, alpha: 1.0)
+        
         locationSearchTextField.enabled = false
         locationSearchTextField.hidden = true
+        
         findButton.enabled = false
         findButton.hidden = true
+        
         submitButton.hidden = false
         submitButton.enabled = true
+        submitButton.alpha = 1.0
         
-        // TODO: figure how to make bottom view opaque so more of the map shows??
-//        bottomView.backgroundColor = UIColor.whiteColor()
-//        bottomView.alpha = 0.25
-//        bottomView.opaque = true
-//        submitButton.alpha = 1.0
+        topViewWhereLabel.hidden = true
+        topViewTodayLabel.hidden = true
+        topViewStudyLabel.hidden = true
+        
+        urlTextField.hidden = false
+        urlTextField.enabled = true
+        
+        previewURLButton.hidden = false
+        previewURLButton.enabled = true
         
         mapView.hidden = false
-        
     }
-    
     
     func searchForLocation() {
         // remove any pins on the map from prior search
+        if let annotations = mapView.annotations {
+            mapView.removeAnnotations(annotations)
+        }
         
-        // do a location search based on text
-        let localSearchRequest = MKLocalSearchRequest()
-        localSearchRequest.naturalLanguageQuery = locationSearchTextField.text
+        // using the CLGeocoder class
+        let geoCoding = CLGeocoder()
+        geoCoding.geocodeAddressString(locationSearchTextField.text) { placeMarks, error in
+            // grab the first location returned
+            if placeMarks.count > 0 {
+                let placeMark = placeMarks[0] as! CLPlacemark
+                if let location = placeMark.location {
+                    let coordinate = location.coordinate
+                    self.newLatitude = coordinate.latitude
+                    self.newLongitude = coordinate.longitude
+                    
+                    var annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = self.locationSearchTextField.text
+                    
+                    let span = MKCoordinateSpanMake(0.05, 0.05)
+                    let region = MKCoordinateRegionMake(coordinate, span)
+                    self.mapView.region = region
+                    self.mapView.centerCoordinate = coordinate
+                    self.mapView.addAnnotation(annotation)
+                    
+                    self.hideFindView()
+                } else {
+                    // none found or error because no location was loaded
+                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to find that location at this time")
+                }
+            } else {
+                // none found
+                ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
+            }
+        }
         
         
-        // handle ui update with call back, or alert that location was not found
         
         
+//        // do a location search based on text
+//        let localSearchRequest = MKLocalSearchRequest()
+//        localSearchRequest.naturalLanguageQuery = locationSearchTextField.text
+//        
+//        // handle ui update with call back, or alert that location was not found
+//        let localSearch = MKLocalSearch(request: localSearchRequest)
+//        localSearch.startWithCompletionHandler() { response, error in
+//            if let error = error {
+//                let errorString = ApiHelper.errorForNSError(error)
+//                if errorString != nil {
+//                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: errorString!)
+//                } else {
+//                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to find that location at this time")
+//                }
+//            } else if response == nil {
+//                ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
+//            } else {
+//                self.newLatitude = response.boundingRegion.center.latitude
+//                self.newLongitude = response.boundingRegion.center.longitude
+//                let coordinate = CLLocationCoordinate2D(latitude: self.newLatitude!, longitude: self.newLongitude!)
+//
+//                var annotation = MKPointAnnotation()
+//                annotation.coordinate = coordinate
+//                annotation.title = self.locationSearchTextField.text
+//                
+//                let span = MKCoordinateSpanMake(0.05, 0.05)
+//                let region = MKCoordinateRegionMake(coordinate, span)
+//                self.mapView.region = region
+//                self.mapView.centerCoordinate = coordinate
+//                self.mapView.addAnnotation(annotation)
+//                
+//                self.hideFindView()
+//            }
+//        }
     }
     
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func previewURLTouchUp() {
+        if urlTextField.text.isEmpty || !ApiHelper.isValidURL(urlTextField.text) {
+            ApiHelper.displayErrorAlert(self, title: "Unable to preview URL", message: "Enter a url in the form http(s)://")
+        } else {
+            
+            let authorizationURL = NSURL(string: urlTextField.text)
+            let request = NSURLRequest(URL: authorizationURL!)
+            let webViewController = self.storyboard!.instantiateViewControllerWithIdentifier("URLPreviewViewController") as! URLPreviewViewController
+            webViewController.urlRequest = request
+            
+            let webNavigationController = UINavigationController()
+            webNavigationController.pushViewController(webViewController, animated: false)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.presentViewController(webNavigationController, animated: true, completion: nil)
+            })
+        }
+        
+    }
+    @IBAction func submitNewLocation() {
+        if urlTextField.text.isEmpty || !ApiHelper.isValidURL(urlTextField.text) {
+            ApiHelper.displayErrorAlert(self, title: "Invalid URL", message: "Enter a url in the form http(s)://")
+        } else {
+            let studentParameters: [String: AnyObject] = [
+                ParseClient.JSONResponseKeys.UniqueKey : udacityStudent.emailAddress!,
+                ParseClient.JSONResponseKeys.FirstName : udacityStudent.firstName!,
+                ParseClient.JSONResponseKeys.LastName : udacityStudent.lastName!,
+                ParseClient.JSONResponseKeys.MapString : locationSearchTextField.text,
+                ParseClient.JSONResponseKeys.MediaURL : urlTextField.text,
+                ParseClient.JSONResponseKeys.Latitude : newLatitude!,
+                ParseClient.JSONResponseKeys.Longitude : newLongitude!
+            ]
+            let newStudent = StudentInformation(dictionary: studentParameters)
+            
+            parseClient.postNewStudentLocation(newStudent) { result, error in
+                if let error = error {
+                    let errorString = ApiHelper.errorForNSError(error)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if errorString != nil {
+                            ApiHelper.displayErrorAlert(self, title: "Location search error", message: errorString!)
+                        } else {
+                            ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to post location")
+                        }
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func cancelButtonTouchUp() {
@@ -79,19 +238,11 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     }
 
     @IBAction func findLocationOnMap() {
-        hideFindView()
+        // validate that text is entered into the field
+        if locationSearchTextField.text.isEmpty {
+            ApiHelper.displayErrorAlert(self, title: "Missing Location", message: "You must enter a location")
+        } else {
+            searchForLocation()
+        }
     }
-    
-    
-    @IBOutlet weak var submitLocation: UIButton!
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -35,6 +35,7 @@ extension ParseClient {
         static let ParseRestApiKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
     }
     
+    // body uses some response keys
     struct JSONResponseKeys {
         static let Results = "results"
         static let CreatedAt = "createdAt"

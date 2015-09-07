@@ -14,8 +14,14 @@ struct UdacityStudent {
     var lastName : String? = nil
     var firstName : String? = nil
     var emailAddress : String? = nil
+    var userId: String? = nil
     
     init(dictionary: [String: AnyObject]) {
+        
+        if let user = dictionary[UdacityClient.JSONResponseKeys.UserKey] as? String {
+            self.userId = user
+        }
+        
         if let userLastName = dictionary[UdacityClient.JSONResponseKeys.UserLastName] as? String {
             self.lastName = userLastName
         }
