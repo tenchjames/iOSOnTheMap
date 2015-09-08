@@ -187,6 +187,8 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
                         }
                     }
                 } else {
+                    // insert us at the top of the stack so view see newly added without having to reload
+                    RecentStudents.sharedInstance().prependStudent(newStudent)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }

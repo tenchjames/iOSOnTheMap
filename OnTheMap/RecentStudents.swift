@@ -32,6 +32,10 @@ class RecentStudents {
         }
     }
     
+    func prependStudent(student: StudentInformation) {
+        mostRecentStudentLocations.insert(student, atIndex: 0)
+    }
+    
     func getRecentStudents() -> [StudentInformation] {
         return self.mostRecentStudentLocations
     }
