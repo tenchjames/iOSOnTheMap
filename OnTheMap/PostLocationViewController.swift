@@ -21,6 +21,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var topViewStudyLabel: UILabel!
     @IBOutlet weak var topViewTodayLabel: UILabel!
     @IBOutlet weak var urlTextField: UITextField!
+    @IBOutlet weak var activityMonitor: UIActivityIndicatorView!
     
     var udacityStudent: UdacityStudent!
     var parseClient: ParseClient!
@@ -111,33 +112,52 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         
         // using the CLGeocoder class
         let geoCoding = CLGeocoder()
+        activityMonitor.startAnimating()
         geoCoding.geocodeAddressString(locationSearchTextField.text) { placeMarks, error in
-            // grab the first location returned
-            if placeMarks.count > 0 {
-                let placeMark = placeMarks[0] as! CLPlacemark
-                if let location = placeMark.location {
-                    let coordinate = location.coordinate
-                    self.newLatitude = coordinate.latitude
-                    self.newLongitude = coordinate.longitude
-                    
-                    var annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = self.locationSearchTextField.text
-                    
-                    let span = MKCoordinateSpanMake(0.05, 0.05)
-                    let region = MKCoordinateRegionMake(coordinate, span)
-                    self.mapView.region = region
-                    self.mapView.centerCoordinate = coordinate
-                    self.mapView.addAnnotation(annotation)
-                    
-                    self.hideFindView()
+            self.activityMonitor.stopAnimating()
+            var message: String
+            if let error = error {
+                let code = error.code
+                
+                if code == CLError.Network.rawValue {
+                    message = "Please check your internet connection"
+                } else if code == CLError.GeocodeFoundNoResult.rawValue {
+                    message = "Unable to find that location"
+                } else if code == CLError.GeocodeCanceled.rawValue {
+                    message = "Search canceled"
                 } else {
-                    // none found or error because no location was loaded
-                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to find that location at this time")
+                    // handle other errors with general message
+                    message = "Unable to search at this time"
                 }
+                ApiHelper.displayErrorAlert(self, title: "Geo Coding Error", message: message)
             } else {
-                // none found
-                ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
+                // grab the first location returned
+                if placeMarks.count > 0 {
+                    let placeMark = placeMarks[0] as! CLPlacemark
+                    if let location = placeMark.location {
+                        let coordinate = location.coordinate
+                        self.newLatitude = coordinate.latitude
+                        self.newLongitude = coordinate.longitude
+                        
+                        var annotation = MKPointAnnotation()
+                        annotation.coordinate = coordinate
+                        annotation.title = self.locationSearchTextField.text
+                        
+                        let span = MKCoordinateSpanMake(0.05, 0.05)
+                        let region = MKCoordinateRegionMake(coordinate, span)
+                        self.mapView.region = region
+                        self.mapView.centerCoordinate = coordinate
+                        self.mapView.addAnnotation(annotation)
+                        
+                        self.hideFindView()
+                    } else {
+                        // none found or error because no location was loaded
+                        ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to find that location at this time")
+                    }
+                } else {
+                    // none found
+                    ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
+                }
             }
         }
     }

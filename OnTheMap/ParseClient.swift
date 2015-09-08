@@ -37,9 +37,6 @@ class ParseClient: NSObject {
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             if let error = downloadError {
-                // TODO: create error messaging
-                //let userInfo = [NSLocalizedDescriptionKey : "Need to get error from JSON"]
-                //let newError = NSError(domain: "Udacity Error", code: 1, userInfo: userInfo)
                 completionHandler(result: nil, error: error)
             } else {
                 // 5. & 6. Parse the data and use (send with completion handler)

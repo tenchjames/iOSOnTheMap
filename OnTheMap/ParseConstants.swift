@@ -25,6 +25,11 @@ extension ParseClient {
         static let Order = "order"
     }
     
+    struct ParameterValues {
+        static let CreatedAtAsc = "createdAt"
+        static let CreatedAtDesc = "-createdAt"
+    }
+    
     struct JSONHeaderValues {
         static let ApplicationHeader = "X-Parse-Application-Id"
         static let RestApiKeyHeader = "X-Parse-REST-API-Key"

@@ -95,9 +95,10 @@ class AdditionalDetailViewController: UIViewController, UITableViewDelegate, UIT
         showBusy()
         // get top 100 students
         let parameters = [
-            ParseClient.ParameterKeys.Limit: 100
+            ParseClient.ParameterKeys.Limit: 100,
+            ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.CreatedAtDesc
         ]
-        parseClient.getMostRecentStudentLocations(parameters) { results, error in
+        parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
             if let error = error {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showNotBusy()
@@ -152,9 +153,10 @@ class AdditionalDetailViewController: UIViewController, UITableViewDelegate, UIT
             activityIndicator.startAnimating()
             let parameters = [
                 ParseClient.ParameterKeys.Limit : 10,
-                ParseClient.ParameterKeys.Skip : currentStudentsCount
+                ParseClient.ParameterKeys.Skip : currentStudentsCount,
+                ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.CreatedAtDesc
             ]
-            parseClient.getMostRecentStudentLocations(parameters) { results, error in
+            parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
                 if let error = error {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.activityIndicator.stopAnimating()

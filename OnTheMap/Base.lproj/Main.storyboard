@@ -455,6 +455,9 @@
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="K8h-EV-mDk">
+                                        <rect key="frame" x="290" y="193" width="20" height="20"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.55228740590000003" green="0.71576162639999996" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -463,11 +466,13 @@
                                     <constraint firstItem="QNM-de-wAG" firstAttribute="leading" secondItem="iea-lU-ODl" secondAttribute="leading" id="9gG-jP-PwD"/>
                                     <constraint firstItem="hUb-VX-w9b" firstAttribute="top" secondItem="iea-lU-ODl" secondAttribute="top" id="ASz-mB-8dA"/>
                                     <constraint firstAttribute="trailing" secondItem="QNM-de-wAG" secondAttribute="trailing" id="Bte-SX-Nch"/>
+                                    <constraint firstAttribute="centerY" secondItem="K8h-EV-mDk" secondAttribute="centerY" constant="27" id="KUy-1v-AXi"/>
                                     <constraint firstAttribute="trailing" secondItem="hUb-VX-w9b" secondAttribute="trailing" id="Mfr-X5-sKi"/>
                                     <constraint firstItem="hUb-VX-w9b" firstAttribute="leading" secondItem="iea-lU-ODl" secondAttribute="leading" id="PcE-sD-2YM"/>
                                     <constraint firstItem="hUb-VX-w9b" firstAttribute="leading" secondItem="iea-lU-ODl" secondAttribute="leading" id="QuX-8z-1D5"/>
                                     <constraint firstItem="QNM-de-wAG" firstAttribute="top" secondItem="iea-lU-ODl" secondAttribute="top" constant="25" id="WF9-e2-7qp"/>
                                     <constraint firstItem="hUb-VX-w9b" firstAttribute="top" secondItem="iea-lU-ODl" secondAttribute="top" id="asv-Yu-dJX"/>
+                                    <constraint firstAttribute="centerX" secondItem="K8h-EV-mDk" secondAttribute="centerX" id="cdv-AE-hU7"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hUb-VX-w9b" secondAttribute="bottom" constant="80" id="jQH-qt-1El"/>
                                     <constraint firstAttribute="bottom" secondItem="hUb-VX-w9b" secondAttribute="bottom" id="k33-Sn-bQd"/>
                                     <constraint firstAttribute="trailing" secondItem="hUb-VX-w9b" secondAttribute="trailing" id="lhi-y4-mUp"/>
@@ -625,6 +630,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="activityMonitor" destination="K8h-EV-mDk" id="41t-jg-20S"/>
                         <outlet property="bottomView" destination="jqs-Qq-fQO" id="piI-gq-3oU"/>
                         <outlet property="findButton" destination="SRe-Ex-b5W" id="IPG-cZ-6Og"/>
                         <outlet property="locationSearchTextField" destination="QNM-de-wAG" id="s9x-Xq-Rep"/>

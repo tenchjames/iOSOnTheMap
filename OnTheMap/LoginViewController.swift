@@ -80,7 +80,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.errorLabel.text = "Please connect to the Internet"
         } else {
             self.errorIconLabel.text = Icomoon.Cross.rawValue
-            self.errorLabel.text = "Unable to connect at thsi time"
+            self.errorLabel.text = "Unable to connect at this time"
         }
     }
     
