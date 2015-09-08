@@ -139,4 +139,47 @@ class AdditionalDetailViewController: UIViewController, UITableViewDelegate, UIT
 
         return cell
     }
+    
+    // allow more than 100 students info to be loaded in a network effecient way by loading 10 more at a time when user
+    // scrolls to the bottom of the list
+    var firedViewLoad: Bool = false
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let currentStudentsCount = self.recentStudents.getRecentStudents().count
+        let matchedIndex = currentStudentsCount - 1
+        // check to prevent this from running every time they scroll. we expected 99 items on original load of data
+        if !firedViewLoad && matchedIndex == indexPath.row && matchedIndex > 98 {
+            firedViewLoad = true
+            activityIndicator.startAnimating()
+            let parameters = [
+                ParseClient.ParameterKeys.Limit : 10,
+                ParseClient.ParameterKeys.Skip : currentStudentsCount
+            ]
+            parseClient.getMostRecentStudentLocations(parameters) { results, error in
+                if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.stopAnimating()
+                        ApiHelper.displayErrorAlert(self, title: "Parse Error", message: "Error retrieving new data")
+                    }
+                } else {
+                    if let result = results {
+                        if result.count > 0 {
+                            self.recentStudents.appendStudents(result)
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.tableView.reloadData()
+                                self.activityIndicator.stopAnimating()
+                                self.firedViewLoad = false
+                            }
+                        } else {
+                            // no results
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.activityIndicator.stopAnimating()
+                                // we have reached the end of the data set
+                                // don't let the event fire any more (not setting firedViewLoad to false)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
