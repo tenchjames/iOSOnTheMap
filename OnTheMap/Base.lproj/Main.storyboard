@@ -17,6 +17,14 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -204,6 +212,150 @@
             </objects>
             <point key="canvasLocation" x="1713" y="1064"/>
         </scene>
+        <!--Additional Detail View Controller-->
+        <scene sceneID="0Xm-As-xXr">
+            <objects>
+                <viewController storyboardIdentifier="AdditionalDetailVC" id="zU4-Jv-NKA" customClass="AdditionalDetailViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6E9-3r-JQ3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Eb1-Ue-B6g"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ugz-G9-uIe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PN6-K6-PxC">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="ybi-qK-PT8">
+                                    <rect key="frame" x="0.0" y="186" width="600" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="detailCell" rowHeight="100" id="jwd-KL-o21" customClass="AdditionalDetailTableViewCell" customModule="OnTheMap" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jwd-KL-o21" id="lTU-Mz-ZKM">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iUz-mX-Qdg">
+                                                    <rect key="frame" x="8" y="53" width="67" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Longitude:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qPI-vt-xKd">
+                                                    <rect key="frame" x="8" y="75" width="81" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="180.635" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knr-CP-vdd">
+                                                    <rect key="frame" x="92" y="77" width="62" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EID-wK-VZ3">
+                                                    <rect key="frame" x="8" y="8" width="71" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="71" id="XXN-xA-3Be"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XEE-Vs-Ask">
+                                                    <rect key="frame" x="8" y="31" width="71" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="71" id="gaC-Bt-5h4"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Name Last Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLo-of-tfH">
+                                                    <rect key="frame" x="92" y="8" width="500" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The map string location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9x-uk-CgI">
+                                                    <rect key="frame" x="91" y="31" width="501" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="180.635" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3r-lZ-cPW">
+                                                    <rect key="frame" x="92" y="55" width="62" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qPI-vt-xKd" firstAttribute="leading" secondItem="lTU-Mz-ZKM" secondAttribute="leadingMargin" id="A1R-LS-GbI"/>
+                                                <constraint firstItem="XEE-Vs-Ask" firstAttribute="top" secondItem="EID-wK-VZ3" secondAttribute="bottom" constant="3" id="BMi-Ql-rNc"/>
+                                                <constraint firstItem="EID-wK-VZ3" firstAttribute="leading" secondItem="lTU-Mz-ZKM" secondAttribute="leadingMargin" id="JUz-iv-rEu"/>
+                                                <constraint firstItem="y3r-lZ-cPW" firstAttribute="leading" secondItem="iUz-mX-Qdg" secondAttribute="trailing" constant="17" id="Khu-h0-HUQ"/>
+                                                <constraint firstItem="knr-CP-vdd" firstAttribute="leading" secondItem="qPI-vt-xKd" secondAttribute="trailing" constant="3" id="Kjw-rc-GU4"/>
+                                                <constraint firstItem="g9x-uk-CgI" firstAttribute="top" secondItem="KLo-of-tfH" secondAttribute="bottom" constant="3" id="Nxy-LA-TJL"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="trailing" secondItem="lTU-Mz-ZKM" secondAttribute="trailingMargin" id="O4G-XI-OqD"/>
+                                                <constraint firstItem="y3r-lZ-cPW" firstAttribute="top" secondItem="g9x-uk-CgI" secondAttribute="bottom" constant="4" id="Qjc-9Z-0co"/>
+                                                <constraint firstItem="XEE-Vs-Ask" firstAttribute="leading" secondItem="lTU-Mz-ZKM" secondAttribute="leadingMargin" id="Rq6-0Y-Gku"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lTU-Mz-ZKM" secondAttribute="trailingMargin" priority="600" id="WyA-sc-ToU"/>
+                                                <constraint firstItem="iUz-mX-Qdg" firstAttribute="leading" secondItem="lTU-Mz-ZKM" secondAttribute="leadingMargin" id="YPt-yq-7KC"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="leading" secondItem="EID-wK-VZ3" secondAttribute="trailing" constant="33" id="bEZ-ve-wFa"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EID-wK-VZ3" secondAttribute="trailing" priority="600" constant="33" id="bmL-fS-64Q"/>
+                                                <constraint firstItem="knr-CP-vdd" firstAttribute="top" secondItem="y3r-lZ-cPW" secondAttribute="bottom" constant="2" id="cR6-ud-AUy"/>
+                                                <constraint firstItem="g9x-uk-CgI" firstAttribute="trailing" secondItem="lTU-Mz-ZKM" secondAttribute="trailingMargin" id="cSI-Ub-lA1"/>
+                                                <constraint firstItem="g9x-uk-CgI" firstAttribute="leading" secondItem="XEE-Vs-Ask" secondAttribute="trailing" constant="12" id="emG-Co-BDS"/>
+                                                <constraint firstItem="y3r-lZ-cPW" firstAttribute="leading" secondItem="g9x-uk-CgI" secondAttribute="leading" id="f18-yR-rBb"/>
+                                                <constraint firstItem="y3r-lZ-cPW" firstAttribute="leading" secondItem="knr-CP-vdd" secondAttribute="leading" id="gF4-S5-sqn"/>
+                                                <constraint firstItem="iUz-mX-Qdg" firstAttribute="top" secondItem="XEE-Vs-Ask" secondAttribute="bottom" constant="2" id="gIJ-Dj-12M"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="top" secondItem="lTU-Mz-ZKM" secondAttribute="topMargin" id="iFC-2c-g3M"/>
+                                                <constraint firstItem="qPI-vt-xKd" firstAttribute="top" secondItem="iUz-mX-Qdg" secondAttribute="bottom" constant="2" id="ijl-kQ-MEI"/>
+                                                <constraint firstItem="g9x-uk-CgI" firstAttribute="top" secondItem="KLo-of-tfH" secondAttribute="bottom" constant="3" id="jJV-eS-E9G"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="leading" secondItem="EID-wK-VZ3" secondAttribute="trailing" constant="13" id="jo2-tW-7ZX"/>
+                                                <constraint firstItem="KLo-of-tfH" firstAttribute="leading" secondItem="g9x-uk-CgI" secondAttribute="leading" id="pQf-j8-CpV"/>
+                                                <constraint firstItem="EID-wK-VZ3" firstAttribute="top" secondItem="lTU-Mz-ZKM" secondAttribute="topMargin" id="reF-Jy-mLd"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="WyA-sc-ToU"/>
+                                                    <exclude reference="bEZ-ve-wFa"/>
+                                                    <exclude reference="bmL-fS-64Q"/>
+                                                    <exclude reference="pQf-j8-CpV"/>
+                                                    <exclude reference="Nxy-LA-TJL"/>
+                                                    <exclude reference="f18-yR-rBb"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="latitudeLabel" destination="iUz-mX-Qdg" id="z29-NB-imT"/>
+                                            <outlet property="latitudeValueLabel" destination="y3r-lZ-cPW" id="gmb-eo-hot"/>
+                                            <outlet property="locationLabel" destination="XEE-Vs-Ask" id="iiH-aY-47F"/>
+                                            <outlet property="locationValueLabel" destination="g9x-uk-CgI" id="Msu-0r-Msb"/>
+                                            <outlet property="longitudeLabel" destination="qPI-vt-xKd" id="1CO-pm-yiK"/>
+                                            <outlet property="longitudeValueLabel" destination="knr-CP-vdd" id="dnf-oo-EiQ"/>
+                                            <outlet property="nameLabel" destination="EID-wK-VZ3" id="VV2-vU-bEx"/>
+                                            <outlet property="nameValueLabel" destination="KLo-of-tfH" id="7dj-cy-Zhl"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="v2d-dM-ARa"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="ybi-qK-PT8" id="YV6-na-IYN"/>
+                        <outlet property="tableView" destination="PN6-K6-PxC" id="d1D-zW-0nW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JrQ-qt-9zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1627" y="1814"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="0kf-CF-Flp">
             <objects>
@@ -256,6 +408,7 @@
                     <connections>
                         <segue destination="SMN-2t-9vv" kind="relationship" relationship="viewControllers" id="kDy-fr-ePQ"/>
                         <segue destination="BSE-xV-kUe" kind="relationship" relationship="viewControllers" id="XbH-6S-0pz"/>
+                        <segue destination="NAH-jm-7Yz" kind="relationship" relationship="viewControllers" id="4z2-FE-hVc"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hcb-BI-xo7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -560,10 +713,30 @@
             </objects>
             <point key="canvasLocation" x="901" y="1064"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wFd-g3-RMb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NAH-jm-7Yz" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" selectedImage="pin" systemItem="more" id="FuA-Cx-8mV"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1wY-bn-ht9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="zU4-Jv-NKA" kind="relationship" relationship="rootViewController" id="pVM-Uk-SpT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uKJ-sE-oYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="507" y="1830"/>
+        </scene>
     </scenes>
     <resources>
         <image name="list" width="32" height="32"/>
         <image name="map" width="32" height="32"/>
+        <image name="pin" width="32" height="32"/>
         <image name="udacity" width="256" height="256"/>
     </resources>
 </document>

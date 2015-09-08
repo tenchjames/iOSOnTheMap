@@ -140,44 +140,6 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
                 ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
             }
         }
-        
-        
-        
-        
-//        // do a location search based on text
-//        let localSearchRequest = MKLocalSearchRequest()
-//        localSearchRequest.naturalLanguageQuery = locationSearchTextField.text
-//        
-//        // handle ui update with call back, or alert that location was not found
-//        let localSearch = MKLocalSearch(request: localSearchRequest)
-//        localSearch.startWithCompletionHandler() { response, error in
-//            if let error = error {
-//                let errorString = ApiHelper.errorForNSError(error)
-//                if errorString != nil {
-//                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: errorString!)
-//                } else {
-//                    ApiHelper.displayErrorAlert(self, title: "Location search error", message: "Unable to find that location at this time")
-//                }
-//            } else if response == nil {
-//                ApiHelper.displayErrorAlert(self, title: "Location not found", message: "Unable to find that location, please search again")
-//            } else {
-//                self.newLatitude = response.boundingRegion.center.latitude
-//                self.newLongitude = response.boundingRegion.center.longitude
-//                let coordinate = CLLocationCoordinate2D(latitude: self.newLatitude!, longitude: self.newLongitude!)
-//
-//                var annotation = MKPointAnnotation()
-//                annotation.coordinate = coordinate
-//                annotation.title = self.locationSearchTextField.text
-//                
-//                let span = MKCoordinateSpanMake(0.05, 0.05)
-//                let region = MKCoordinateRegionMake(coordinate, span)
-//                self.mapView.region = region
-//                self.mapView.centerCoordinate = coordinate
-//                self.mapView.addAnnotation(annotation)
-//                
-//                self.hideFindView()
-//            }
-//        }
     }
     
     @IBAction func previewURLTouchUp() {

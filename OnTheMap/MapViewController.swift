@@ -52,7 +52,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillAppear(animated)
         
         // check if the array of Students has been filled, if so use that to build
-        // the map pins
+        // the array so we are not making extra network calls
+        // else if no data, then reload it
         let studentsArray = recentStudents.getRecentStudents()
         
         if studentsArray.count == 0 {
@@ -64,8 +65,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             // put new pins back on the map
             mapView.addAnnotations(self.annotations)
         }
-        
-        
     }
     
     func pinNewLocationTouchUp() {

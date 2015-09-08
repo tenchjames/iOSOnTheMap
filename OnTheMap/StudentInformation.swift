@@ -18,6 +18,7 @@ struct StudentInformation {
     var mediaUrl = ""
     var latitude = 0.0
     var longitude = 0.0
+    var createdAt = ""
     
     init (dictionary: [String: AnyObject]) {
         if let objectId = dictionary[ParseClient.JSONResponseKeys.ObjectId] as? String {
@@ -52,8 +53,9 @@ struct StudentInformation {
             self.longitude = longitude
         }
         
-        // for now we do not need to implement other parameters on the parse object like
-        // createdAt and updatedAt
+        if let createdAt = dictionary[ParseClient.JSONResponseKeys.CreatedAt] as? String {
+            self.createdAt = createdAt
+        }
     }
     
     static func studentsFromResuls(results: [[String: AnyObject]]) -> [StudentInformation] {
