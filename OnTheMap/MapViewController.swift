@@ -112,9 +112,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         ]
         parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
             if let error = error {
+                // show custom message - error will contain difference between parsing error or network error
+                var customError: String
+                if let message = ApiHelper.errorForNSError(error) {
+                    customError = message
+                } else {
+                    customError = "Error getting most recent students"
+                }
                 dispatch_async(dispatch_get_main_queue()) {
                     self.showNotBusy()
-                    ApiHelper.displayErrorAlert(self, title: "Parse Error", message: "Error retrieving new data")
+                    ApiHelper.displayErrorAlert(self, title: "Parse Error", message: customError)
                 }
             } else {
                 if let results = results {
