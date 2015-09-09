@@ -157,7 +157,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate, UITextFie
                 ApiHelper.displayErrorAlert(self, title: "Geo Coding Error", message: message)
             } else {
                 // grab the first location returned
-                if placeMarks.count > 0 {
+                if placeMarks != nil && placeMarks.count > 0 {
                     let placeMark = placeMarks[0] as! CLPlacemark
                     if let location = placeMark.location {
                         let coordinate = location.coordinate
