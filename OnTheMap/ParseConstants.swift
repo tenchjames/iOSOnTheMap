@@ -28,6 +28,8 @@ extension ParseClient {
     struct ParameterValues {
         static let CreatedAtAsc = "createdAt"
         static let CreatedAtDesc = "-createdAt"
+        static let UpdatedAtAsc = "updatedAt"
+        static let UpdatedAtDesc = "-updatedAt"
     }
     
     struct JSONHeaderValues {

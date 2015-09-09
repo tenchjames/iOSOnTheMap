@@ -487,57 +487,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jqs-Qq-fQO">
-                                <rect key="frame" x="0.0" y="520" width="600" height="80"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRe-Ex-b5W">
-                                        <rect key="frame" x="8" y="25" width="584" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
-                                        <state key="normal" title="Find on the Map">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="findLocationOnMap" destination="Fsq-1b-93l" eventType="touchUpInside" id="RUm-6n-hZA"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0MX-gQ-SXr">
-                                        <rect key="frame" x="60" y="25" width="479" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
-                                        <state key="normal" title="Submit">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="submitNewLocation" destination="Fsq-1b-93l" eventType="touchUpInside" id="vOw-js-aSp"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.87058823529411766" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="400" constant="80" id="6Ns-iK-o2y"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" priority="500" constant="80" id="AHD-aL-Ywd"/>
-                                    <constraint firstAttribute="centerY" secondItem="SRe-Ex-b5W" secondAttribute="centerY" id="H3y-0R-G05"/>
-                                    <constraint firstItem="SRe-Ex-b5W" firstAttribute="leading" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="500" constant="8" id="Iiy-3Y-xOq"/>
-                                    <constraint firstAttribute="height" constant="80" id="MtG-wT-jxn"/>
-                                    <constraint firstAttribute="centerX" secondItem="0MX-gQ-SXr" secondAttribute="centerX" id="NQ1-RX-Df6"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0MX-gQ-SXr" secondAttribute="trailing" priority="600" constant="60" id="ORm-Oc-VPY"/>
-                                    <constraint firstItem="0MX-gQ-SXr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="600" constant="60" id="PKO-oM-mCY"/>
-                                    <constraint firstAttribute="centerY" secondItem="0MX-gQ-SXr" secondAttribute="centerY" id="Pur-ar-ryB"/>
-                                    <constraint firstItem="SRe-Ex-b5W" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="600" constant="8" id="fT1-zr-gzA"/>
-                                    <constraint firstAttribute="trailing" secondItem="SRe-Ex-b5W" secondAttribute="trailing" priority="500" constant="8" id="kXb-Kh-Fk7"/>
-                                    <constraint firstItem="0MX-gQ-SXr" firstAttribute="leading" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="500" constant="60" id="pb5-4n-0M3"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SRe-Ex-b5W" secondAttribute="trailing" priority="600" constant="8" id="sb5-7a-C6W"/>
-                                    <constraint firstAttribute="trailing" secondItem="0MX-gQ-SXr" secondAttribute="trailing" priority="500" constant="60" id="tDH-gC-z6L"/>
-                                    <constraint firstAttribute="centerX" secondItem="SRe-Ex-b5W" secondAttribute="centerX" id="xNB-gy-0rU"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="MtG-wT-jxn"/>
-                                        <exclude reference="xNB-gy-0rU"/>
-                                    </mask>
-                                </variation>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zsE-gh-Bvl">
                                 <rect key="frame" x="0.0" y="56" width="600" height="84"/>
                                 <subviews>
@@ -588,6 +537,57 @@
                                     <mask key="constraints">
                                         <exclude reference="nmO-Tz-fDf"/>
                                         <exclude reference="j3v-R2-7kd"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jqs-Qq-fQO">
+                                <rect key="frame" x="0.0" y="520" width="600" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRe-Ex-b5W">
+                                        <rect key="frame" x="8" y="25" width="584" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <state key="normal" title="Find on the Map">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="findLocationOnMap" destination="Fsq-1b-93l" eventType="touchUpInside" id="RUm-6n-hZA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0MX-gQ-SXr">
+                                        <rect key="frame" x="60" y="25" width="479" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <state key="normal" title="Submit">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="submitNewLocation" destination="Fsq-1b-93l" eventType="touchUpInside" id="vOw-js-aSp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.87058823529411766" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="400" constant="80" id="6Ns-iK-o2y"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" priority="500" constant="80" id="AHD-aL-Ywd"/>
+                                    <constraint firstAttribute="centerY" secondItem="SRe-Ex-b5W" secondAttribute="centerY" id="H3y-0R-G05"/>
+                                    <constraint firstItem="SRe-Ex-b5W" firstAttribute="leading" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="500" constant="8" id="Iiy-3Y-xOq"/>
+                                    <constraint firstAttribute="height" constant="80" id="MtG-wT-jxn"/>
+                                    <constraint firstAttribute="centerX" secondItem="0MX-gQ-SXr" secondAttribute="centerX" id="NQ1-RX-Df6"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0MX-gQ-SXr" secondAttribute="trailing" priority="600" constant="60" id="ORm-Oc-VPY"/>
+                                    <constraint firstItem="0MX-gQ-SXr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="600" constant="60" id="PKO-oM-mCY"/>
+                                    <constraint firstAttribute="centerY" secondItem="0MX-gQ-SXr" secondAttribute="centerY" id="Pur-ar-ryB"/>
+                                    <constraint firstItem="SRe-Ex-b5W" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="600" constant="8" id="fT1-zr-gzA"/>
+                                    <constraint firstAttribute="trailing" secondItem="SRe-Ex-b5W" secondAttribute="trailing" priority="500" constant="8" id="kXb-Kh-Fk7"/>
+                                    <constraint firstItem="0MX-gQ-SXr" firstAttribute="leading" secondItem="jqs-Qq-fQO" secondAttribute="leading" priority="500" constant="60" id="pb5-4n-0M3"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SRe-Ex-b5W" secondAttribute="trailing" priority="600" constant="8" id="sb5-7a-C6W"/>
+                                    <constraint firstAttribute="trailing" secondItem="0MX-gQ-SXr" secondAttribute="trailing" priority="500" constant="60" id="tDH-gC-z6L"/>
+                                    <constraint firstAttribute="centerX" secondItem="SRe-Ex-b5W" secondAttribute="centerX" id="xNB-gy-0rU"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="MtG-wT-jxn"/>
+                                        <exclude reference="xNB-gy-0rU"/>
                                     </mask>
                                 </variation>
                             </view>

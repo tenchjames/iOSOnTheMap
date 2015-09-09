@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PostLocationViewController: UIViewController, MKMapViewDelegate {
+class PostLocationViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var findButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
@@ -28,7 +28,7 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
     var newLatitude: CLLocationDegrees?
     var newLongitude: CLLocationDegrees?
     let urlTextFieldDelegate = URLTextFieldDelegate()
-
+    var tapRecognizer: UITapGestureRecognizer? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +37,37 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
         // Do any additional setup after loading the view.
         self.mapView.delegate = self
         self.urlTextField.delegate = urlTextFieldDelegate
+        locationSearchTextField.delegate = self
+        
+        /* Configure tap recognizer */
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer?.numberOfTapsRequired = 1
         showFindView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         configureView()
+        self.addKeyboardDismissRecognizer()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeKeyboardDismissRecognizer()
+    }
+    
+    // MARK: - Keyboard Fixes
+    
+    func addKeyboardDismissRecognizer() {
+        self.view.addGestureRecognizer(tapRecognizer!)
+    }
+    
+    func removeKeyboardDismissRecognizer() {
+        self.view.removeGestureRecognizer(tapRecognizer!)
+    }
+    
+    func handleSingleTap(recognizer: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     func configureView() {
@@ -229,4 +254,10 @@ class PostLocationViewController: UIViewController, MKMapViewDelegate {
             searchForLocation()
         }
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

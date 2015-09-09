@@ -96,7 +96,7 @@ class AdditionalDetailViewController: UIViewController, UITableViewDelegate, UIT
         // get top 100 students
         let parameters = [
             ParseClient.ParameterKeys.Limit: 100,
-            ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.CreatedAtDesc
+            ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.UpdatedAtDesc
         ]
         parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
             if let error = error {
@@ -154,7 +154,7 @@ class AdditionalDetailViewController: UIViewController, UITableViewDelegate, UIT
             let parameters = [
                 ParseClient.ParameterKeys.Limit : 10,
                 ParseClient.ParameterKeys.Skip : currentStudentsCount,
-                ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.CreatedAtDesc
+                ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.UpdatedAtDesc
             ]
             parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
                 if let error = error {

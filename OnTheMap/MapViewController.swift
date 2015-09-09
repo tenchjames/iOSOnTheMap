@@ -108,7 +108,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let parseClient = ParseClient.sharedInstance()
         let parameters = [
             ParseClient.ParameterKeys.Limit: 100,
-            ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.CreatedAtDesc
+            ParseClient.ParameterKeys.Order : ParseClient.ParameterValues.UpdatedAtDesc
         ]
         parseClient.getMostRecentStudentLocations(parameters as! [String : AnyObject]) { results, error in
             if let error = error {
